@@ -4,11 +4,13 @@ import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * @author maowenrou
+ * @author moralok
  * @since 2020/8/16 下午4:22
  */
+@Configuration
 public class MyBatisPlusConfig {
 
     /**
