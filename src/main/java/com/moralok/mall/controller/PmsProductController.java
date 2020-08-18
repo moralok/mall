@@ -1,6 +1,7 @@
 package com.moralok.mall.controller;
 
 
+import com.moralok.mall.domain.CommonResult;
 import com.moralok.mall.domain.entity.PmsProduct;
 import com.moralok.mall.service.IPmsProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,9 @@ public class PmsProductController {
     private IPmsProductService pmsProductService;
 
     @GetMapping("/listAll")
-    public List<PmsProduct> listAll() {
-        return pmsProductService.list();
+    public CommonResult listAll() {
+        List<PmsProduct> productList = pmsProductService.list();
+        return CommonResult.success(productList);
     }
 }
 
