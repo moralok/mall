@@ -1,7 +1,7 @@
 # mall
 
 ## 日志系统
-### 使用 Aspect
+1. Aspect
 
 ## 数据库
 ### Mysql
@@ -17,3 +17,6 @@
 
 ## 接口文档框架
 1. Swagger
+
+## 安全框架
+1. Shiro
