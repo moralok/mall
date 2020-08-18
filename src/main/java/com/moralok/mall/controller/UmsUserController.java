@@ -3,7 +3,6 @@ package com.moralok.mall.controller;
 
 import com.moralok.mall.domain.CommonResult;
 import com.moralok.mall.domain.dto.UserLoginParam;
-import com.moralok.mall.domain.entity.UmsUser;
 import com.moralok.mall.service.IUmsUserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -35,11 +34,9 @@ public class UmsUserController {
         return "登录成功";
     }
 
-    @GetMapping("/myself")
-    public CommonResult getMySelf() {
-        Subject subject = SecurityUtils.getSubject();
-        UmsUser user = (UmsUser) subject.getPrincipal();
-        return CommonResult.success(user);
+    @GetMapping("/currentUser")
+    public CommonResult getCurrentUser() {
+        return CommonResult.success(umsUserService.getCurrentUser());
     }
 
     @GetMapping("/login")

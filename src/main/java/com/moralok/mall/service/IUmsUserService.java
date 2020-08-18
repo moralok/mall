@@ -20,4 +20,11 @@ public interface IUmsUserService extends IService<UmsUser> {
      * @return
      */
     UmsUser getByUsername(String username);
+
+    /**
+     * 查询当前的登录用户
+     *
+     * @return
+     */
+    UmsUser getCurrentUser();
 }
