@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moralok.mall.dao.UmsPermissionMapper">
+
+    <select id="getPermissions" resultType="com.moralok.mall.domain.entity.UmsPermission">
+        select up.id, up.name, value, parent_id
+        from ums_user_role uur
+            join ums_role ur on uur.role_id = ur.id and ur.status = 1
+            join ums_role_permission urp on ur.id = urp.role_id
+            join ums_permission up on urp.permission_id = up.id
+        where user_id = #{userId}
+        group by up.id
+    </select>
+</mapper>

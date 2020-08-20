@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moralok.mall.dao.UmsRoleMapper">
+
+    <select id="getRoles" resultType="com.moralok.mall.domain.entity.UmsRole">
+        select ur.id, name, note, status
+        from ums_user_role uur join ums_role ur on uur.role_id = ur.id and ur.status = 1
+        where user_id = #{userId}
+    </select>
+</mapper>
