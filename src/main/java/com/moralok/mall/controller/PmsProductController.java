@@ -2,13 +2,11 @@ package com.moralok.mall.controller;
 
 
 import com.moralok.mall.domain.CommonResult;
+import com.moralok.mall.domain.dto.EsProduct;
 import com.moralok.mall.domain.entity.PmsProduct;
 import com.moralok.mall.service.IPmsProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,6 +29,18 @@ public class PmsProductController {
     public CommonResult listAll() {
         List<PmsProduct> productList = pmsProductService.list();
         return CommonResult.success(productList);
+    }
+
+    @GetMapping("/search")
+    public CommonResult searchByName(@RequestParam String name) {
+        List<EsProduct> productList = pmsProductService.searchByName(name);
+        return CommonResult.success(productList);
+    }
+
+    @PostMapping("/saveAllToEs")
+    public CommonResult saveAllToEs() {
+        pmsProductService.saveAllToEs();
+        return CommonResult.success();
     }
 }
 

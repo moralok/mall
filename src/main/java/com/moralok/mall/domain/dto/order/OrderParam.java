@@ -3,7 +3,7 @@ package com.moralok.mall.domain.dto.order;
 import lombok.Data;
 
 /**
- * @author maowenrou
+ * @author moralok
  * @since 2020/8/18 下午5:21
  */
 @Data

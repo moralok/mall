@@ -12,6 +12,10 @@
 2. 对象序列化存储。Serializable、JsonDeserialize、JsonSerialize
 3. Lettuce 连接池
 
+### ElasticSearch
+1. 使用 RestHighLevelClient 作为客户端
+2. 使用 Repository 简洁方便但是欠缺灵活性和扩展性
+
 ## 单元测试框架
 ### JUnit
 

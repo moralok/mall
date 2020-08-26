@@ -36,6 +36,16 @@ public class CommonResult<T> {
     /**
      * 成功返回结果
      *
+     * @param <T> 数据的类型参数
+     * @return 通用返回结果
+     */
+    public static <T> CommonResult<T> success() {
+        return new CommonResult<>(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), null);
+    }
+
+    /**
+     * 成功返回结果
+     *
      * @param data 数据
      * @param <T> 数据的类型参数
      * @return 通用返回结果

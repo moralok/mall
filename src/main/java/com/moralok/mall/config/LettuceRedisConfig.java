@@ -44,6 +44,7 @@ public class LettuceRedisConfig {
     @Bean
     public RedisTemplate<String, Object> objectRedisTemplate(LettuceConnectionFactory connectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setConnectionFactory(connectionFactory);
         return redisTemplate;
     }

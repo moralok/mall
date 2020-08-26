@@ -116,6 +116,12 @@
             <version>1.5.0</version>
         </dependency>
 
+        <!-- elasticsearch -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+        </dependency>
+
         <!-- junit -->
         <dependency>
             <groupId>junit</groupId>
