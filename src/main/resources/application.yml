@@ -18,6 +18,12 @@ spring:
   elasticsearch:
     rest:
       uris: http://localhost:9200
+  rabbitmq:
+    host: localhost
+    port: 5672
+    virtual-host: /mall
+    username: mall
+    password: mall
 server:
   port: 9508
 logging:

@@ -122,6 +122,12 @@
             <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
         </dependency>
 
+        <!-- rabbitmq -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
         <!-- junit -->
         <dependency>
             <groupId>junit</groupId>

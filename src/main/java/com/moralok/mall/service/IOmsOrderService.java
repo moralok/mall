@@ -23,4 +23,11 @@ public interface IOmsOrderService extends IService<OmsOrder> {
      * @return
      */
     CommonResult generateOrder(OrderParam orderParam);
+
+    /**
+     * 发送取消订单延时消息
+     *
+     * @param orderId
+     */
+    void sendCancelOrderDelayMsg(Integer orderId);
 }

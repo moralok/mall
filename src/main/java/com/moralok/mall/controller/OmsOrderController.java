@@ -5,11 +5,7 @@ import com.moralok.mall.domain.CommonResult;
 import com.moralok.mall.domain.dto.order.OrderParam;
 import com.moralok.mall.service.IOmsOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -29,6 +25,12 @@ public class OmsOrderController {
     @PostMapping("/generateOrder")
     public CommonResult generateOrder(@RequestBody OrderParam orderParam) {
         return omsOrderService.generateOrder(orderParam);
+    }
+
+    @PostMapping("/sendCancelOrderDelayMsg")
+    public CommonResult sendCancelOrderDelayMsg(@RequestParam Integer orderId) {
+        omsOrderService.sendCancelOrderDelayMsg(orderId);
+        return CommonResult.success();
     }
 }
 

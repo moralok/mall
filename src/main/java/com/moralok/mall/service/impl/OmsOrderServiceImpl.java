@@ -1,6 +1,7 @@
 package com.moralok.mall.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.moralok.mall.config.rabbitmq.sender.CancelOrderSender;
 import com.moralok.mall.dao.OmsOrderMapper;
 import com.moralok.mall.domain.CommonResult;
 import com.moralok.mall.domain.dto.order.OrderParam;
@@ -38,6 +39,9 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
     @Autowired
     private IOmsOrderItemService omsOrderItemService;
 
+    @Autowired
+    private CancelOrderSender cancelOrderSender;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public CommonResult generateOrder(OrderParam orderParam) {
@@ -61,6 +65,11 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
         orderItem.setOrderId(order.getId());
         omsOrderItemService.save(orderItem);
         return CommonResult.success(order, "下单成功");
+    }
+
+    @Override
+    public void sendCancelOrderDelayMsg(Integer orderId) {
+        cancelOrderSender.sendMessage(orderId, 10000);
     }
 
     private boolean hasStock(PmsSkuStock skuStock, Integer productQuantity) {

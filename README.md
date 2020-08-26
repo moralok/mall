@@ -14,7 +14,11 @@
 
 ### ElasticSearch
 1. 使用 RestHighLevelClient 作为客户端
-2. 使用 Repository 简洁方便但是欠缺灵活性和扩展性
+
+- 使用 Repository 简洁方便但是欠缺灵活性和扩展性
+
+### Rabbitmq
+- 延时消息不能接受变动的时间（阿里云AMQP高级特性支持）
 
 ## 单元测试框架
 ### JUnit
