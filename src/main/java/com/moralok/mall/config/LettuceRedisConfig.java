@@ -42,6 +42,13 @@ public class LettuceRedisConfig {
     }
 
     @Bean
+    public RedisTemplate<String, Object> objectRedisTemplate(LettuceConnectionFactory connectionFactory) {
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(connectionFactory);
+        return redisTemplate;
+    }
+
+    @Bean
     public RedissonClient redisson() {
         Config config = new Config();
         config.useSingleServer()

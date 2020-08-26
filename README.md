@@ -23,8 +23,11 @@
 1. 验证和授权配置
 2. 开启注解
 3. 使用权限注解时 swagger 无法读取控制器
+4. 使用redis实现session分布式存储
 
 - 如何优雅地处理用户-角色-权限这样的关联查询
+- session在redis中的序列化问题（shiro会额外添加属性导致GenericJackson2JsonRedisSerializer反序列化失败）
+- 频繁访问redis问题，shiro-redis作者使用ThreadLocal优化
 
 
 ## 订单流程
