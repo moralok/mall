@@ -2,6 +2,7 @@
 
 ## 日志系统
 1. Aspect
+2. 统一的异常处理
 
 ## 数据库
 ### Mysql
@@ -37,6 +38,20 @@
 - session在redis中的序列化问题（shiro会额外添加属性导致GenericJackson2JsonRedisSerializer反序列化失败）
 - 频繁访问redis问题，shiro-redis作者使用ThreadLocal优化
 
+## 统一的数据校验
+1. javax.validation 和 org.hibernate.validator
+2. @Valid 和 @Validation（对前者的封装）
+||Valid|Validation|
+|-----|-----|-----|
+|级联|有|无|
+|分组|无|有|
+|级别|方法、字段、构造器、参数|类、方法、参数|
+3. 自定义参数校验
+
+- 数据绑定
+- 本地化
+- @Repeatable(List.class)
+- ConstraintValidatorContext
 
 ## 订单流程
 1. 快速下单

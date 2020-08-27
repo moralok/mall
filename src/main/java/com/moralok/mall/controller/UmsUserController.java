@@ -11,6 +11,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -29,11 +30,11 @@ public class UmsUserController {
     private IUmsUserService umsUserService;
 
     @PostMapping("/login")
-    public String doLogin(@RequestBody UserLoginParam userLoginParam) {
+    public CommonResult doLogin(@Validated @RequestBody UserLoginParam userLoginParam) {
         Subject subject = SecurityUtils.getSubject();
         AuthenticationToken token = new UsernamePasswordToken(userLoginParam.getUsername(), userLoginParam.getPassword());
         subject.login(token);
-        return "登录成功";
+        return CommonResult.success(null, "登录成功");
     }
 
     @RequiresPermissions("foo:read")

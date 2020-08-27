@@ -7,6 +7,8 @@ import com.moralok.mall.service.IOmsOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * <p>
  * 订单表 前端控制器
@@ -23,7 +25,7 @@ public class OmsOrderController {
     private IOmsOrderService omsOrderService;
 
     @PostMapping("/generateOrder")
-    public CommonResult generateOrder(@RequestBody OrderParam orderParam) {
+    public CommonResult generateOrder(@Valid @RequestBody OrderParam orderParam) {
         return omsOrderService.generateOrder(orderParam);
     }
 

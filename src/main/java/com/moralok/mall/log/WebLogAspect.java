@@ -60,6 +60,7 @@ public class WebLogAspect {
         webLog.setResult(result);
         log.info("{}", JSONUtil.parse(webLog));
         return result;
+        // todo: 出现异常时缺少日志
     }
 
     private List<Object> getParameter(Method method, Object[] args) {
