@@ -33,6 +33,7 @@
 2. 开启注解
 3. 使用权限注解时 swagger 无法读取控制器
 4. 使用redis实现session分布式存储
+5. 前后端项目禁用登录重定向，重写过滤器，返回 JSON
 
 - 如何优雅地处理用户-角色-权限这样的关联查询
 - session在redis中的序列化问题（shiro会额外添加属性导致GenericJackson2JsonRedisSerializer反序列化失败）
