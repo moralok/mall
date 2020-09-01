@@ -1,5 +1,6 @@
 package com.moralok.mall.service;
 
+import com.moralok.mall.domain.CommonResult;
 import com.moralok.mall.domain.entity.UmsUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -27,4 +28,12 @@ public interface IUmsUserService extends IService<UmsUser> {
      * @return
      */
     UmsUser getCurrentUser();
+
+    /**
+     * 注册用户
+     *
+     * @param user
+     * @return
+     */
+    CommonResult register(UmsUser user);
 }

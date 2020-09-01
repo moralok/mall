@@ -3,7 +3,9 @@ package com.moralok.mall.controller;
 
 import com.moralok.mall.domain.CommonResult;
 import com.moralok.mall.domain.dto.UserLoginParam;
+import com.moralok.mall.domain.entity.UmsUser;
 import com.moralok.mall.service.IUmsUserService;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -28,6 +30,12 @@ public class UmsUserController {
 
     @Autowired
     private IUmsUserService umsUserService;
+
+    @ApiOperation(value = "用户注册")
+    @PostMapping("/register")
+    public CommonResult register(@Validated() @RequestBody UmsUser user) {
+        return umsUserService.register(user);
+    }
 
     @PostMapping("/login")
     public CommonResult doLogin(@Validated @RequestBody UserLoginParam userLoginParam) {

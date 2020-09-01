@@ -1,5 +1,6 @@
 package com.moralok.mall.config.shiro;
 
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -15,15 +16,35 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
+ * Shiro 配置
+ *
  * @author moralok
  * @since 2020/8/17 下午9:55
  */
 @Configuration
 public class ShiroConfig {
 
+    /**
+     * 自定义 Realm
+     * 可以理解为用户身份信息的数据源
+     *
+     * @return MyRealm
+     */
     @Bean
-    MyRealm myRealm() {
-        return new MyRealm();
+    public MyRealm myRealm() {
+        MyRealm myRealm = new MyRealm();
+        myRealm.setCredentialsMatcher(myCredentialsMatcher());
+        return myRealm;
+    }
+
+    /**
+     * 使用自定义的 CredentialsMatcher
+     *
+     * @return MyCredentialsMatcher
+     */
+    @Bean
+    public MyCredentialsMatcher myCredentialsMatcher() {
+        return new MyCredentialsMatcher();
     }
 
     @Bean
@@ -52,6 +73,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/webjars/**", "anon");
         filterChainDefinitionMap.put("/configuration/**", "anon");
         filterChainDefinitionMap.put("/umsUser/login", "anon");
+        filterChainDefinitionMap.put("/umsUser/register", "anon");
         filterChainDefinitionMap.put("/test/**", "anon");
         // authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问
          filterChainDefinitionMap.put("/**", "authc");
@@ -75,6 +97,11 @@ public class ShiroConfig {
         return authorizationAttributeSourceAdvisor;
     }
 
+    /**
+     * 不加会有循环依赖问题，还没弄明白
+     *
+     * @return DefaultAdvisorAutoProxyCreator
+     */
     @Bean
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
         DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
@@ -85,7 +112,6 @@ public class ShiroConfig {
     @Bean
     public SessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        // inject redisSessionDAO
         sessionManager.setSessionDAO(redisSessionDAO());
         return sessionManager;
     }

@@ -25,22 +25,30 @@
 ## 单元测试框架
 ### JUnit
 
-## 接口文档框架
-1. Swagger
+## 接口文档框架 Swagger
+1. ApiModel
+2. ApiModelProperty
+
+- 如何处理接口使用通用返回对象，其中的 data 为泛型
+- 像创建和更新的DTO中的属性是否必填互不相同，必须使用两个DTO了？
 
 ## 安全框架
 #### Shiro
 1. 验证和授权配置
-2. 开启注解
-3. 使用权限注解时 swagger 无法读取控制器
+2. 开启注解 AuthorizationAttributeSourceAdvisor
+3. 使用权限注解时 swagger 无法读取控制器 
 4. 使用redis实现session分布式存储
 5. 前后端项目禁用登录重定向，重写过滤器，返回 JSON
+6. 密码匹配器
+7. 密码加密
 
 - 如何优雅地处理用户-角色-权限这样的关联查询
 - session在redis中的序列化问题（shiro会额外添加属性导致GenericJackson2JsonRedisSerializer反序列化失败）
 - 频繁访问redis问题，shiro-redis作者使用ThreadLocal优化
 
-## 统一的数据校验
+## Spring 常用的特性
+
+### 统一的数据校验
 1. javax.validation 和 org.hibernate.validator
 2. @Valid 和 @Validation（对前者的封装）
 ||Valid|Validation|
@@ -55,12 +63,15 @@
 - @Repeatable(List.class)
 - ConstraintValidatorContext
 
-## 参数转换器
+### 参数转换器
 1. 实现 Converter
 2. 使用 @Component
 3. DateTimeFormat 和 JsonFormat 格式化日期
 
 - 原始的enum名称转换仍然有效
+
+### 事务
+1. @Transactional(rollbackFor)
 
 ## 订单流程
 1. 快速下单
