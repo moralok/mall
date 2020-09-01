@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
 /**
- * @author maowenrou
+ * @author moralok
  * @since 2020/9/1 2:13 下午
  */
 public class MyFormAuthenticationFilter extends FormAuthenticationFilter {

@@ -1,5 +1,7 @@
 package com.moralok.mall.controller;
 
+import com.moralok.mall.domain.CommonResult;
+import com.moralok.mall.domain.dto.Dummy;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,5 +17,10 @@ public class TestController {
     @GetMapping("/hello")
     public String hello() {
         return "hi";
+    }
+
+    @GetMapping("/testConverter")
+    public CommonResult testConverter(Dummy dummy) {
+        return CommonResult.success(dummy);
     }
 }

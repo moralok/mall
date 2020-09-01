@@ -17,6 +17,7 @@
 1. 使用 RestHighLevelClient 作为客户端
 
 - 使用 Repository 简洁方便但是欠缺灵活性和扩展性
+- Registering converter from class org.springframework.data.geo.Point to interface java.util.Map as writing converter although it doesn't convert to a store-supported type! You might want to check your annotation setup at the converter implementation. 目前只能忽略这些警告
 
 ### Rabbitmq
 - 延时消息不能接受变动的时间（阿里云AMQP高级特性支持）
@@ -53,6 +54,13 @@
 - 本地化
 - @Repeatable(List.class)
 - ConstraintValidatorContext
+
+## 参数转换器
+1. 实现 Converter
+2. 使用 @Component
+3. DateTimeFormat 和 JsonFormat 格式化日期
+
+- 原始的enum名称转换仍然有效
 
 ## 订单流程
 1. 快速下单
