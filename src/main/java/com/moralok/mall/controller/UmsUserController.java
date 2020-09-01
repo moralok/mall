@@ -5,6 +5,7 @@ import com.moralok.mall.domain.CommonResult;
 import com.moralok.mall.domain.dto.UserLoginParam;
 import com.moralok.mall.domain.entity.UmsUser;
 import com.moralok.mall.service.IUmsUserService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -15,6 +16,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * <p>
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
  * @author moralok
  * @since 2020-08-17
  */
+@Api(value = "用户")
 @RestController
 @RequestMapping("/umsUser")
 public class UmsUserController {
@@ -37,6 +40,7 @@ public class UmsUserController {
         return umsUserService.register(user);
     }
 
+    @ApiOperation(value = "用户登录")
     @PostMapping("/login")
     public CommonResult doLogin(@Validated @RequestBody UserLoginParam userLoginParam) {
         Subject subject = SecurityUtils.getSubject();
@@ -45,6 +49,7 @@ public class UmsUserController {
         return CommonResult.success(null, "登录成功");
     }
 
+    @ApiOperation(value = "获取当前登录用户")
     @RequiresPermissions("foo:read")
     @RequiresRoles("李白")
     @GetMapping("/currentUser")
@@ -52,9 +57,10 @@ public class UmsUserController {
         return CommonResult.success(umsUserService.getCurrentUser());
     }
 
+    @ApiIgnore
     @GetMapping("/login")
-    public String login() {
-        return "请登录";
+    public CommonResult login() {
+        return CommonResult.failed("请登录");
     }
 }
 
