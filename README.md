@@ -1,9 +1,5 @@
 # mall
 
-## 日志系统
-1. Aspect
-2. 统一的异常处理
-
 ## 数据库
 ### Mysql
 1. 持久层框架 MyBatis Plus
@@ -45,6 +41,7 @@
 - 如何优雅地处理用户-角色-权限这样的关联查询
 - session在redis中的序列化问题（shiro会额外添加属性导致GenericJackson2JsonRedisSerializer反序列化失败）
 - 频繁访问redis问题，shiro-redis作者使用ThreadLocal优化
+- 未登录的情况下，不会进控制器
 
 ## Spring 常用的特性
 
@@ -72,6 +69,11 @@
 
 ### 事务
 1. @Transactional(rollbackFor)
+
+### Aspect
+1. 日志系统
+2. 统一的异常处理
+3. 统一的接口返回。使用 ResponseBodyAdvice 避免控制器方法的返回值为统一返回结果，从而使接口更清晰，swagger文档更清楚。
 
 ## 业务
 

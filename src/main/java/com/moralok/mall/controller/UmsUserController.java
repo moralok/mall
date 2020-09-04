@@ -51,8 +51,8 @@ public class UmsUserController {
 
     @ApiOperation(value = "获取当前登录用户")
     @GetMapping("/currentUser")
-    public CommonResult getCurrentUser() {
-        return CommonResult.success(umsUserService.getCurrentUser());
+    public UmsUser getCurrentUser() {
+        return umsUserService.getCurrentUser();
     }
 
     @ApiIgnore
