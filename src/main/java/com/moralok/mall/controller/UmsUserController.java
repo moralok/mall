@@ -36,7 +36,7 @@ public class UmsUserController {
 
     @ApiOperation(value = "用户注册")
     @PostMapping("/register")
-    public CommonResult register(@Validated() @RequestBody UmsUser user) {
+    public CommonResult register(@Validated @RequestBody UmsUser user) {
         return umsUserService.register(user);
     }
 
@@ -50,8 +50,6 @@ public class UmsUserController {
     }
 
     @ApiOperation(value = "获取当前登录用户")
-    @RequiresPermissions("foo:read")
-    @RequiresRoles("李白")
     @GetMapping("/currentUser")
     public CommonResult getCurrentUser() {
         return CommonResult.success(umsUserService.getCurrentUser());
