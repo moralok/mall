@@ -54,9 +54,19 @@ public class PmsSkuStock extends Model<PmsSkuStock> {
     private Integer stock;
 
     /**
+     * 低库存预警
+     */
+    private Integer lowStock;
+
+    /**
      * 已售
      */
     private Integer sold;
+
+    /**
+     * sku 图片
+     */
+    private String skuPic;
 
     /**
      * 乐观锁版本号
