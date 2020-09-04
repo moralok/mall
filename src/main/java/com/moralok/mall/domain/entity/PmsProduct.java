@@ -27,9 +27,34 @@ public class PmsProduct extends Model<PmsProduct> {
     private Integer id;
 
     /**
+     * 品牌ID
+     */
+    private Integer brandId;
+
+    /**
+     * 品牌名称
+     */
+    private String brandName;
+
+    /**
      * 商品名称
      */
     private String name;
+
+    /**
+     * 商品描述
+     */
+    private String description;
+
+    /**
+     * 商品缩略图
+     */
+    private String thumbnail;
+
+    /**
+     * 图片
+     */
+    private String pics;
 
     /**
      * 是否在售

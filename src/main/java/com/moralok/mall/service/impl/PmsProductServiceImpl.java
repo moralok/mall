@@ -1,6 +1,10 @@
 package com.moralok.mall.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.moralok.mall.domain.dto.EsProduct;
+import com.moralok.mall.domain.dto.product.QueryProductCondition;
 import com.moralok.mall.domain.entity.PmsProduct;
 import com.moralok.mall.dao.PmsProductMapper;
 import com.moralok.mall.repository.EsProductRepository;
@@ -26,6 +30,16 @@ public class PmsProductServiceImpl extends ServiceImpl<PmsProductMapper, PmsProd
 
     @Autowired
     private EsProductRepository esProductRepository;
+
+    @Override
+    public IPage<PmsProduct> list(QueryProductCondition condition, Integer page, Integer size) {
+        Page<PmsProduct> pageable = new Page<>(page, size);
+        LambdaQueryWrapper<PmsProduct> queryWrapper = new LambdaQueryWrapper<>();
+        if (condition.getBrandId() != null) {
+            queryWrapper.eq(PmsProduct::getBrandId, condition.getBrandId());
+        }
+        return page(pageable, queryWrapper);
+    }
 
     @Override
     public List<EsProduct> searchByName(String name) {
