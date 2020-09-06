@@ -56,11 +56,13 @@ public class PmsProductController {
         return skuStockService.listByProductId(productId);
     }
 
+    @ApiOperation(value = "搜索商品")
     @GetMapping("/search")
     public List<EsProduct> searchByName(@RequestParam String name) {
         return productService.searchByName(name);
     }
 
+    @ApiOperation(value = "将所有商品存入ElasticSearch")
     @PostMapping("/saveAllToEs")
     public CommonResult saveAllToEs() {
         productService.saveAllToEs();

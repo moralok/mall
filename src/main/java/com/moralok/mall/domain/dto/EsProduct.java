@@ -18,14 +18,50 @@ public class EsProduct {
     private Integer id;
 
     /**
+     * 品牌ID
+     */
+    @Field(type = FieldType.Integer)
+    private Integer brandId;
+
+    /**
+     * 品牌名称
+     */
+    @Field(type = FieldType.Text)
+    private String brandName;
+
+    /**
      * 商品名称
      */
     @Field(type = FieldType.Text)
     private String name;
 
     /**
+     * 商品描述
+     */
+    @Field(type = FieldType.Text)
+    private String description;
+
+    /**
+     * 商品缩略图
+     */
+    @Field(type = FieldType.Text)
+    private String thumbnail;
+
+    /**
+     * 图片
+     */
+    @Field(type = FieldType.Text)
+    private String pics;
+
+    /**
      * 是否在售
      */
     @Field(type = FieldType.Boolean)
     private Boolean onSale;
+
+    /**
+     * 逻辑删除
+     */
+    @Field(type = FieldType.Boolean)
+    private Boolean deleted;
 }

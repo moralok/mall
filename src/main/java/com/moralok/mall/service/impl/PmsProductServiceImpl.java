@@ -3,6 +3,7 @@ package com.moralok.mall.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.moralok.mall.converter.mapstruct.ProductMapper;
 import com.moralok.mall.domain.dto.EsProduct;
 import com.moralok.mall.domain.dto.product.QueryProductCondition;
 import com.moralok.mall.domain.entity.PmsProduct;
@@ -48,11 +49,7 @@ public class PmsProductServiceImpl extends ServiceImpl<PmsProductMapper, PmsProd
 
     @Override
     public void saveAllToEs() {
-        List<EsProduct> list = list().stream().map(pmsProduct -> {
-            EsProduct esProduct = new EsProduct();
-            BeanUtils.copyProperties(pmsProduct, esProduct);
-            return esProduct;
-        }).collect(Collectors.toList());
+        List<EsProduct> list = list().stream().map(ProductMapper.INSTANCE::productToEsProduct).collect(Collectors.toList());
         esProductRepository.saveAll(list);
     }
 }

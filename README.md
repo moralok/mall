@@ -43,6 +43,10 @@
 - 频繁访问redis问题，shiro-redis作者使用ThreadLocal优化
 - 未登录的情况下，不会进控制器
 
+## JavaBean 转换框架 MapStruct
+
+1. [Lombok 共用问题](https://mapstruct.org/faq/#can-i-use-mapstruct-together-with-project-lombok)
+
 ## Spring 常用的特性
 
 ### 统一的数据校验
