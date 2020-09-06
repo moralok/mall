@@ -3,6 +3,8 @@
 ## 数据库
 ### Mysql
 1. 持久层框架 MyBatis Plus
+- 使用 TypeHandler 实现 Json to List<String>
+- ObjectMapper
 
 ### Redis
 1. 分布式锁框架 Redisson

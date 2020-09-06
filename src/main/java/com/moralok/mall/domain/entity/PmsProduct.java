@@ -1,10 +1,14 @@
 package com.moralok.mall.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.util.List;
 
+import com.moralok.mall.converter.mybatisplus.JsonStringListTypeHandler;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -23,6 +27,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "商品")
+@TableName(autoResultMap = true)
 public class PmsProduct extends Model<PmsProduct> {
 
     private static final long serialVersionUID=1L;
@@ -65,7 +70,8 @@ public class PmsProduct extends Model<PmsProduct> {
      * 图片
      */
     @ApiModelProperty("商品图片")
-    private String pics;
+    @TableField(typeHandler = JsonStringListTypeHandler.class)
+    private List<String> pics;
 
     /**
      * 是否在售

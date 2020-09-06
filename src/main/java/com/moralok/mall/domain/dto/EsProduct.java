@@ -6,6 +6,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.util.List;
+
 /**
  * @author moralok
  * @since 2020/8/26 下午5:12
@@ -51,7 +53,7 @@ public class EsProduct {
      * 图片
      */
     @Field(type = FieldType.Text)
-    private String pics;
+    private List<String> pics;
 
     /**
      * 是否在售
