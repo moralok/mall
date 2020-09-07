@@ -9,7 +9,7 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 /**
  * 自定义密码匹配器
  *
- * @author maowenrou
+ * @author moralok
  * @since 2020/9/1 5:02 下午
  */
 public class MyCredentialsMatcher extends SimpleCredentialsMatcher {
