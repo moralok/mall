@@ -32,7 +32,7 @@ public class UserLoginParam {
     /**
      * 仅仅为了测试Bean参数级联校验功能
      */
-    private List<@Valid @Length(min = 1, max = 3) String> justForValidation;
+    private List<@Valid @Length(min = 1, max = 10) String> justForValidation;
 
     /**
      * 仅仅为了测试Bean参数自定义校验

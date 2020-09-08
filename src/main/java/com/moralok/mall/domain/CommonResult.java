@@ -68,6 +68,13 @@ public class CommonResult<T> {
 
     /**
      * 失败返回结果
+     */
+    public static <T> CommonResult<T> failed() {
+        return failed(ResultCode.FAILED);
+    }
+
+    /**
+     * 失败返回结果
      *
      * @param errorCode 错误码
      * @param <T> 数据的参数类型

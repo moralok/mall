@@ -24,6 +24,7 @@ public interface IUmsUserService extends IService<UmsUser> {
 
     /**
      * 查询当前的登录用户
+     * 将依赖于 Shiro 具体的实现隐藏
      *
      * @return
      */
