@@ -73,6 +73,12 @@ public class MyRestControllerHandler implements ResponseBodyAdvice<Object> {
         return commonResult;
     }
 
+    @ExceptionHandler(value = {BaseException.class})
+    public CommonResult handlerBaseException(BaseException e) {
+        // 是否要打印异常呢？
+        return CommonResult.failed(e.getCode(), e.getMessage());
+    }
+
     @Override
     public boolean supports(MethodParameter methodParameter, Class<? extends HttpMessageConverter<?>> aClass) {
         return AnnotatedElementUtils.hasAnnotation(methodParameter.getContainingClass(), RestController.class);

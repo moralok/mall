@@ -1,5 +1,6 @@
 package com.moralok.mall.domain.constant;
 
+import com.moralok.mall.config.BaseException;
 import com.moralok.mall.domain.IErrorCode;
 import lombok.Getter;
 
@@ -18,7 +19,15 @@ public enum ResultCode implements IErrorCode {
     /**
      * 操作失败
      */
-    FAILED(500, "操作失败");
+    FAILED(500, "操作失败"),
+
+    // 基础
+    SYSTEM_IS_BUSY(1001, "系统繁忙，请稍后再试"),
+
+    // 订单
+    INSUFFICIENT_STOCK(2001, "库存不足"),
+
+    ;
 
     private int code;
 
@@ -27,5 +36,9 @@ public enum ResultCode implements IErrorCode {
     ResultCode(int code, String message) {
         this.code = code;
         this.message = message;
+    }
+
+    public BaseException generateException() {
+        return new BaseException(this);
     }
 }

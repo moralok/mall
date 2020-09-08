@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.moralok.mall.config.rabbitmq.sender.CancelOrderSender;
 import com.moralok.mall.dao.OmsOrderMapper;
 import com.moralok.mall.domain.CommonResult;
+import com.moralok.mall.domain.constant.ResultCode;
 import com.moralok.mall.domain.dto.CartItemDto;
 import com.moralok.mall.domain.dto.order.OrderParam;
 import com.moralok.mall.domain.entity.*;
@@ -50,12 +51,10 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
     @Transactional(rollbackFor = Exception.class)
     public CommonResult generateOrder(OrderParam orderParam) {
         PmsSkuStock skuStock = skuStockService.getById(orderParam.getProductSkuId());
-        if (!hasStock(skuStock, orderParam.getProductQuantity())) {
-            return CommonResult.failed("库存不足，下单失败");
-        }
-        if (!lockStock(skuStock, orderParam.getProductQuantity())) {
-            return CommonResult.failed("系统繁忙，请稍后再试");
-        }
+        // 检查库存
+        hasStock(skuStock, orderParam.getProductQuantity());
+        // 扣减库存
+        lockStock(skuStock, orderParam.getProductQuantity());
         OmsOrderItem orderItem = new OmsOrderItem();
         orderItem.setProductId(skuStock.getProductId());
         orderItem.setProductPrice(skuStock.getPrice());
@@ -80,9 +79,9 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
         if (CollectionUtils.isEmpty(cartItemDtoList)) {
             return CommonResult.failed("购物车无可结算商品");
         }
-        if (!hasStock(cartItemDtoList)) {
-            return CommonResult.failed("库存不足，下单失败");
-        }
+        // 检查库存
+        hasStock(cartItemDtoList);
+        // 扣减库存
         lockStock(cartItemDtoList);
         List<OmsOrderItem> orderItemList = new ArrayList<>(cartItemDtoList.size());
         OmsOrder order = new OmsOrder();
@@ -112,30 +111,35 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
         cancelOrderSender.sendMessage(orderId, 10000);
     }
 
-    private boolean hasStock(PmsSkuStock skuStock, Integer productQuantity) {
-        return skuStock.getStock() >= productQuantity;
+    private void hasStock(PmsSkuStock skuStock, Integer productQuantity) {
+        if (skuStock.getStock() < productQuantity) {
+            throw ResultCode.INSUFFICIENT_STOCK.generateException();
+        }
     }
 
-    private boolean hasStock(List<CartItemDto> cartItemDtoList) {
+    private void hasStock(List<CartItemDto> cartItemDtoList) {
         for (CartItemDto item : cartItemDtoList) {
             if (item.getStock() < item.getQuantity()) {
-                return false;
+                throw ResultCode.INSUFFICIENT_STOCK.generateException();
             }
         }
-        return true;
     }
 
-    private boolean lockStock(PmsSkuStock skuStock, Integer productQuantity) {
+    private void lockStock(PmsSkuStock skuStock, Integer productQuantity) {
         skuStock.setStock(skuStock.getStock() - productQuantity).setSold(skuStock.getSold() + productQuantity);
-        return skuStockService.updateById(skuStock);
+        boolean res = skuStockService.updateById(skuStock);
+        if (!res) {
+            throw ResultCode.SYSTEM_IS_BUSY.generateException();
+        }
     }
 
     private void lockStock(List<CartItemDto> cartItemDtoList) {
         for (CartItemDto item : cartItemDtoList) {
+            // todo: 乐观锁插件不能生效，先查后更新有点不爽
             LambdaUpdateWrapper<PmsSkuStock> updateWrapper = new LambdaUpdateWrapper<>();
             updateWrapper.eq(PmsSkuStock::getId, item.getProductSkuId()).set(PmsSkuStock::getStock, item.getStock() - item.getQuantity());
             if (skuStockService.update(updateWrapper)) {
-                // todo: 业务异常
+                throw ResultCode.SYSTEM_IS_BUSY.generateException();
             }
         }
     }

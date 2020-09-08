@@ -94,4 +94,16 @@ public class CommonResult<T> {
     public static <T> CommonResult<T> failed(String message) {
         return new CommonResult<T>(ResultCode.FAILED.getCode(), message, null);
     }
+
+    /**
+     * 失败返回结果
+     *
+     * @param code
+     * @param message
+     * @param <T>
+     * @return
+     */
+    public static <T> CommonResult<T> failed(int code, String message) {
+        return new CommonResult<T>(code, message, null);
+    }
 }
