@@ -1,5 +1,6 @@
 package com.moralok.mall.service;
 
+import com.moralok.mall.domain.dto.CartItemDto;
 import com.moralok.mall.domain.entity.OmsCartItem;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -29,7 +30,7 @@ public interface IOmsCartItemService extends IService<OmsCartItem> {
      * @param userId 用户ID
      * @return 购物车列表
      */
-    List<OmsCartItem> listByUserId(Integer userId);
+    List<CartItemDto> listByUserId(Integer userId);
 
     /**
      * 更新购物车中某商品数量

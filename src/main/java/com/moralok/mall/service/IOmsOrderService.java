@@ -25,6 +25,14 @@ public interface IOmsOrderService extends IService<OmsOrder> {
     CommonResult generateOrder(OrderParam orderParam);
 
     /**
+     * 生成订单
+     * 对应根据购物车生成订单的业务
+     *
+     * @return
+     */
+    CommonResult generateOrder();
+
+    /**
      * 发送取消订单延时消息
      *
      * @param orderId

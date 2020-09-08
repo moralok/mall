@@ -2,6 +2,7 @@ package com.moralok.mall.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.moralok.mall.domain.dto.CartItemDto;
 import com.moralok.mall.domain.entity.OmsCartItem;
 import com.moralok.mall.dao.OmsCartItemMapper;
 import com.moralok.mall.domain.entity.UmsUser;
@@ -45,10 +46,8 @@ public class OmsCartItemServiceImpl extends ServiceImpl<OmsCartItemMapper, OmsCa
     }
 
     @Override
-    public List<OmsCartItem> listByUserId(Integer userId) {
-        LambdaQueryWrapper<OmsCartItem> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(OmsCartItem::getUserId, userId);
-        return list(queryWrapper);
+    public List<CartItemDto> listByUserId(Integer userId) {
+        return this.baseMapper.listByUserId(userId);
     }
 
     @Override

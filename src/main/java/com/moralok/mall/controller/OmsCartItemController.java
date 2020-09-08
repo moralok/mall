@@ -2,6 +2,7 @@ package com.moralok.mall.controller;
 
 
 import com.moralok.mall.domain.CommonResult;
+import com.moralok.mall.domain.dto.CartItemDto;
 import com.moralok.mall.domain.entity.OmsCartItem;
 import com.moralok.mall.service.IOmsCartItemService;
 import com.moralok.mall.service.IUmsUserService;
@@ -39,7 +40,7 @@ public class OmsCartItemController {
 
     @ApiOperation("获取用户的购物车列表")
     @GetMapping("/list")
-    public List<OmsCartItem> list() {
+    public List<CartItemDto> list() {
         return cartItemService.listByUserId(userService.getCurrentUser().getId());
     }
 

@@ -2,4 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.moralok.mall.dao.OmsCartItemMapper">
 
+    <select id="listByUserId" resultType="com.moralok.mall.domain.dto.CartItemDto">
+        select oci.id, oci.product_id, product_sku_id, user_id, quantity,
+               pss.stock, pss.price
+        from oms_cart_item oci
+            left join pms_sku_stock pss on oci.product_sku_id = pss.id and pss.deleted = 0
+        where oci.user_id = #{userId}
+    </select>
 </mapper>
