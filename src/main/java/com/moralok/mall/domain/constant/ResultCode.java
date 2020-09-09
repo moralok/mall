@@ -28,8 +28,13 @@ public enum ResultCode implements IErrorCode {
     // redis
     DELETE_REDIS_KEY_FAILED(1101, "删除redis key失败"),
 
+    // 用户
+    USER_NOT_FOUND(2001, "用户不存在"),
+
     // 订单
-    INSUFFICIENT_STOCK(2001, "库存不足"),
+    INSUFFICIENT_STOCK(2101, "库存不足"),
+
+
 
     ;
 

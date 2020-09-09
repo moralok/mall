@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.moralok.mall.dao.UmsUserMapper;
 import com.moralok.mall.domain.CommonResult;
 import com.moralok.mall.domain.constant.ResultCode;
+import com.moralok.mall.domain.dto.user.UpdatePasswordParam;
 import com.moralok.mall.domain.entity.UmsUser;
 import com.moralok.mall.service.IUmsUserService;
 import com.moralok.mall.service.RedisService;
@@ -52,11 +53,20 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
     }
 
     @Override
+    public UmsUser getByPhoneNumber(String phoneNumber) {
+        LambdaQueryWrapper<UmsUser> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(UmsUser::getPhoneNumber, phoneNumber).last("limit 1");
+        return getOne(queryWrapper);
+    }
+
+    @Override
     public UmsUser getCurrentUser() {
         Subject subject = SecurityUtils.getSubject();
         UmsUser user = (UmsUser) subject.getPrincipal();
         // 脱敏
-        user.setPassword(null);
+        if (user != null) {
+            user.setPassword(null);
+        }
         return user;
     }
 
@@ -73,10 +83,25 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
             return CommonResult.failed("用户名或手机号已注册");
         }
         // 储存用户信息
-        user.setPassword(new SimpleHash("md5", user.getPassword(), user.getUsername(), 2).toString());
+        user.setPassword(getPassword(user.getPassword(), user.getUsername()));
         user.setCreatedAt(LocalDateTime.now());
         save(user);
         return CommonResult.success(null, "注册成功");
+    }
+
+    @Override
+    public CommonResult updatePassword(UpdatePasswordParam param) {
+        // 核对验证码
+        verifyCode(param.getPhoneNumber(), param.getVerificationCode());
+        UmsUser user = getByPhoneNumber(param.getPhoneNumber());
+        if (user == null) {
+            throw ResultCode.USER_NOT_FOUND.generateException();
+        }
+        // 储存用户信息
+        user.setPassword(getPassword(param.getPassword(), user.getUsername()));
+        user.setUpdatedAt(LocalDateTime.now());
+        updateById(user);
+        return CommonResult.success(null, "修改密码成功");
     }
 
     @Override
@@ -88,6 +113,22 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
         return CommonResult.success(code, "获取验证码成功");
     }
 
+    /**
+     * 获得加密后的密码
+     * @param password 明文密码
+     * @param username 用户名
+     * @return 加密后的密码
+     */
+    private String getPassword(String password, String username) {
+        return new SimpleHash("md5", password, username, 2).toString();
+    }
+
+    /**
+     * 核对验证码
+     *
+     * @param phoneNumber 手机号码
+     * @param code 验证码
+     */
     private void verifyCode(String phoneNumber, String code) {
         if (StringUtils.isEmpty(code)) {
             throw ResultCode.VERIFY_CODE_FAILED.generateException();
@@ -101,6 +142,12 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
         redisService.remove(key);
     }
 
+    /**
+     * 获取验证码 redis key
+     *
+     * @param phoneNumber 手机号码
+     * @return redis key
+     */
     private String getRedisKey(String phoneNumber) {
         return redisKeyPrefixVerificationCode + phoneNumber;
     }

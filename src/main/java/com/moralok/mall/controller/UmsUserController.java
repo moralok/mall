@@ -2,7 +2,8 @@ package com.moralok.mall.controller;
 
 
 import com.moralok.mall.domain.CommonResult;
-import com.moralok.mall.domain.dto.UserLoginParam;
+import com.moralok.mall.domain.dto.user.UserLoginParam;
+import com.moralok.mall.domain.dto.user.UpdatePasswordParam;
 import com.moralok.mall.domain.entity.UmsUser;
 import com.moralok.mall.service.IUmsUserService;
 import io.swagger.annotations.Api;
@@ -14,7 +15,6 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * <p>
@@ -59,10 +59,10 @@ public class UmsUserController {
         return userService.getCurrentUser();
     }
 
-    @ApiIgnore
-    @GetMapping("/login")
-    public CommonResult login() {
-        return CommonResult.failed("请登录");
+    @ApiOperation(value = "更改密码")
+    @PostMapping("/updatePassword")
+    public CommonResult updatePassword(@Validated @RequestBody UpdatePasswordParam param) {
+        return userService.updatePassword(param);
     }
 }
 
