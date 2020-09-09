@@ -37,4 +37,12 @@ public interface IUmsUserService extends IService<UmsUser> {
      * @return
      */
     CommonResult register(UmsUser user);
+
+    /**
+     * 获取验证码，并发送至手机号码
+     *
+     * @param phoneNumber
+     * @return
+     */
+    CommonResult getVerificationCode(String phoneNumber);
 }

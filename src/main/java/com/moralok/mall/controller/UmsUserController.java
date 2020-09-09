@@ -10,8 +10,6 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -26,18 +24,24 @@ import springfox.documentation.annotations.ApiIgnore;
  * @author moralok
  * @since 2020-08-17
  */
-@Api(value = "用户")
+@Api
 @RestController
 @RequestMapping("/umsUser")
 public class UmsUserController {
 
     @Autowired
-    private IUmsUserService umsUserService;
+    private IUmsUserService userService;
+
+    @ApiOperation("获取验证码")
+    @GetMapping("/getVerificationCode")
+    public CommonResult getVerificationCode(@RequestParam String phoneNumber) {
+        return userService.getVerificationCode(phoneNumber);
+    }
 
     @ApiOperation(value = "用户注册")
     @PostMapping("/register")
     public CommonResult register(@Validated @RequestBody UmsUser user) {
-        return umsUserService.register(user);
+        return userService.register(user);
     }
 
     @ApiOperation(value = "用户登录")
@@ -52,7 +56,7 @@ public class UmsUserController {
     @ApiOperation(value = "获取当前登录用户")
     @GetMapping("/currentUser")
     public UmsUser getCurrentUser() {
-        return umsUserService.getCurrentUser();
+        return userService.getCurrentUser();
     }
 
     @ApiIgnore

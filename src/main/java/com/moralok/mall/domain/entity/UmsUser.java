@@ -1,6 +1,7 @@
 package com.moralok.mall.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
@@ -90,6 +91,13 @@ public class UmsUser extends Model<UmsUser> {
      */
     @ApiModelProperty(hidden = true)
     private LocalDateTime updatedAt;
+
+    /**
+     * 验证码
+     */
+    @ApiModelProperty(value = "验证码")
+    @TableField(exist = false)
+    private String verificationCode;
 
 
     @Override

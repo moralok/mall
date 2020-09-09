@@ -23,6 +23,10 @@ public enum ResultCode implements IErrorCode {
 
     // 基础
     SYSTEM_IS_BUSY(1001, "系统繁忙，请稍后再试"),
+    VERIFY_CODE_FAILED(1011, "验证码错误"),
+
+    // redis
+    DELETE_REDIS_KEY_FAILED(1101, "删除redis key失败"),
 
     // 订单
     INSUFFICIENT_STOCK(2001, "库存不足"),
