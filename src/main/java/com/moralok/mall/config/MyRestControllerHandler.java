@@ -1,5 +1,6 @@
 package com.moralok.mall.config;
 
+import cn.hutool.json.JSONUtil;
 import com.moralok.mall.domain.CommonResult;
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.authc.AuthenticationException;
@@ -88,6 +89,12 @@ public class MyRestControllerHandler implements ResponseBodyAdvice<Object> {
     public Object beforeBodyWrite(Object o, MethodParameter methodParameter, MediaType mediaType, Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
         if (o instanceof CommonResult) {
             return o;
+        }
+        if (o instanceof String) {
+            // 如果返回值是 String，MediaType 为 text/html，HttpMessageConverter 为 StringHttpMessageConverter，会发生类型转换失败
+            // 此时尽管能正常返回结果，response 的 Content-Type 为 text/html，可以通过在控制器方法上加"produces = "application/json; charset=UTF-8""
+            // 有没有更优雅的解决方案呢
+            return JSONUtil.toJsonStr(CommonResult.success(o));
         }
         return CommonResult.success(o);
     }

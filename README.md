@@ -79,7 +79,9 @@
 ### Aspect
 1. 日志系统
 2. 统一的异常处理
-3. 统一的接口返回。使用 ResponseBodyAdvice 避免控制器方法的返回值为统一返回结果，从而使接口更清晰，swagger文档更清楚。\
+3. 统一的接口返回。使用 ResponseBodyAdvice 避免控制器方法的返回值为统一返回结果，从而使接口更清晰，swagger文档更清楚。
+
+- 返回值为 String 时，统一接口返回处理会发生 CommonResult -> String 转换失败
 
 ### Spring Task
 - 分布式存在并发问题

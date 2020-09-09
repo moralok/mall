@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/test")
 public class TestController {
 
-    @GetMapping("/hello")
+    @GetMapping(value = "/hello", produces = "application/json; charset=UTF-8")
     public String hello() {
         return "hi";
     }
