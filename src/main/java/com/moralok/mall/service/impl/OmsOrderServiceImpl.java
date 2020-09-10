@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -47,9 +48,13 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
     @Autowired
     private CancelOrderSender cancelOrderSender;
 
+    @Autowired
+    private RedisService redisService;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public CommonResult generateOrder(OrderParam orderParam) {
+        redisService.tryLock("generateOrder:" + orderParam.getProductSkuId(), 5, 5, TimeUnit.SECONDS);
         PmsSkuStock skuStock = skuStockService.getById(orderParam.getProductSkuId());
         // 检查库存
         hasStock(skuStock, orderParam.getProductQuantity());
@@ -67,6 +72,7 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
         save(order);
         orderItem.setOrderId(order.getId());
         orderItemService.save(orderItem);
+        redisService.unlock("generateOrder:" + orderParam.getProductSkuId());
         return CommonResult.success(order, "下单成功");
     }
 
