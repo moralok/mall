@@ -34,6 +34,9 @@ public enum ResultCode implements IErrorCode {
     // 订单
     INSUFFICIENT_STOCK(2101, "库存不足"),
 
+    // 地址
+    DELIVERY_ADDRESS_MAX_COUNT_LIMIT(2151, "已经达到最大收货地址数量"),
+
 
 
     ;
