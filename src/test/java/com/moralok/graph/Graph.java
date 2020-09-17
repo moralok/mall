@@ -1,5 +1,7 @@
 package com.moralok.graph;
 
+import com.moralok.alg4.In;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -44,6 +46,16 @@ public class Graph {
         }
     }
 
+    public Graph(In in) {
+        this(in.readInt());
+        int E = in.readInt();
+        for (int i = 0; i < E; i++) {
+            int v = in.readInt();
+            int w = in.readInt();
+            addEdge(v, w);
+        }
+    }
+
     public int V() {
         return V;
     }
@@ -60,5 +72,18 @@ public class Graph {
 
     public Iterable<Integer> adj(int v) {
         return adj[v];
+    }
+
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        s.append(V).append(" vertices, ").append(E).append(" edges ").append("\n");
+        for (int v = 0; v < V; v++) {
+            s.append(v).append(": ");
+            for (int w : adj[v]) {
+                s.append(w).append(" ");
+            }
+            s.append("\n");
+        }
+        return s.toString();
     }
 }

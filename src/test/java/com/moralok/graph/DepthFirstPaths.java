@@ -1,5 +1,6 @@
 package com.moralok.graph;
 
+import java.util.LinkedList;
 import java.util.Stack;
 
 /**
@@ -55,7 +56,7 @@ public class DepthFirstPaths {
             // 防御没有触及的顶点
             return null;
         }
-        Stack<Integer> stack = new Stack<>();
+        LinkedList<Integer> stack = new LinkedList<>();
         for (int x = v; x != s; x = edgeTo[x]) {
             // 注意循环的条件
             stack.push(x);
