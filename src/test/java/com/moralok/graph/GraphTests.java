@@ -78,4 +78,11 @@ public class GraphTests {
             System.out.println("id " + i + " 连通分量中的顶点 " + component[i]);
         }
     }
+
+    @Test
+    public void testCycle() {
+        System.out.println("深度优先搜索检查是否为无环图");
+        Cycle cycle = new Cycle(graph);
+        System.out.println("是否有环 " + cycle.hasCycle());
+    }
 }
