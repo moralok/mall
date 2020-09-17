@@ -85,4 +85,11 @@ public class GraphTests {
         Cycle cycle = new Cycle(graph);
         System.out.println("是否有环 " + cycle.hasCycle());
     }
+
+    @Test
+    public void testTwoColor() {
+        System.out.println("深度优先搜索检查是否为二分图");
+        TwoColor twoColor = new TwoColor(graph);
+        System.out.println("是否为二分图 " + twoColor.isBipartite());
+    }
 }
