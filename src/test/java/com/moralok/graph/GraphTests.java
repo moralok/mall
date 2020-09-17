@@ -3,6 +3,9 @@ package com.moralok.graph;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author moralok
  * @since 2020/9/16
@@ -54,6 +57,25 @@ public class GraphTests {
         BreadthFirstPaths paths = new BreadthFirstPaths(graph, 0);
         for (int i = 0; i < graph.V(); i++) {
             System.out.println("顶点到达 " + i + " 的路径 "+ paths.pathTo(i));
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testConnectedComponent() {
+        System.out.println("深度优先搜索寻找连通分量");
+        ConnectedComponent cc = new ConnectedComponent(graph);
+        int count = cc.count();
+        System.out.println(count + " 连通分量");
+        Set<Integer>[] component = (Set<Integer>[]) new Set[count];
+        for (int i = 0; i < count; i++) {
+            component[i] = new HashSet<>();
+        }
+        for (int i = 0; i < graph.V(); i++) {
+            component[cc.id(i)].add(i);
+        }
+        for (int i = 0; i < count; i++) {
+            System.out.println("id " + i + " 连通分量中的顶点 " + component[i]);
         }
     }
 }
