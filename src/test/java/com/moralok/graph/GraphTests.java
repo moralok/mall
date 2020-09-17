@@ -21,6 +21,7 @@ public class GraphTests {
 
     @Test
     public void testGraph() {
+        System.out.println("构造一个图");
         System.out.println("顶点的数量 " + graph.V());
         System.out.println("边的数量 " + graph.E());
         for (int i = 0; i < graph.V(); i++) {
@@ -30,6 +31,7 @@ public class GraphTests {
 
     @Test
     public void testDepthFirstSearch() {
+        System.out.println("深度优先搜索");
         DepthFirstSearch search = new DepthFirstSearch(graph, 0);
         System.out.println("与0连通的顶点数量 " + search.count());
         for (int i = 0; i < graph.V(); i++) {
@@ -39,7 +41,17 @@ public class GraphTests {
 
     @Test
     public void testDepthFirstPaths() {
+        System.out.println("深度优先搜索寻找路径");
         DepthFirstPaths paths = new DepthFirstPaths(graph, 0);
+        for (int i = 0; i < graph.V(); i++) {
+            System.out.println("顶点到达 " + i + " 的路径 "+ paths.pathTo(i));
+        }
+    }
+
+    @Test
+    public void testBreadthFirstPaths() {
+        System.out.println("广度优先搜索寻找路径");
+        BreadthFirstPaths paths = new BreadthFirstPaths(graph, 0);
         for (int i = 0; i < graph.V(); i++) {
             System.out.println("顶点到达 " + i + " 的路径 "+ paths.pathTo(i));
         }
