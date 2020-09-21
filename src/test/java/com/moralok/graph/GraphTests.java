@@ -1,6 +1,8 @@
 package com.moralok.graph;
 
 import com.moralok.alg4.In;
+import com.moralok.alg4.StdIn;
+import com.moralok.alg4.StdOut;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,6 +17,7 @@ public class GraphTests {
 
     private final String tinyCG = "src/test/java/com/moralok/alg4/data/tinyCG.txt";
     private final String tinyG = "src/test/java/com/moralok/alg4/data/tinyG.txt";
+    private final String routes = "src/test/java/com/moralok/alg4/data/routes.txt";
 
     @Before
     public void setUp() {
@@ -121,5 +124,54 @@ public class GraphTests {
         Graph G = new Graph(new In(tinyG));
         TwoColor twoColor = new TwoColor(G);
         System.out.println("是否为二分图 " + twoColor.isBipartite());
+    }
+
+    @Test
+    public void testSymbolGraph() {
+        System.out.println("测试符号图");
+        String filename = routes;
+        String delimeter = " ";
+        SymbolGraph sg = new SymbolGraph(filename, delimeter);
+        Graph G = sg.G();
+        String source = "JFK";
+        System.out.println(source);
+        for (int w : G.adj(sg.index(source))) {
+            StdOut.println(" " + sg.name(w));
+        }
+        source = "LAX";
+        System.out.println(source);
+        for (int w : G.adj(sg.index(source))) {
+            StdOut.println(" " + sg.name(w));
+        }
+    }
+
+    @Test
+    public void testDegreesOfSeparation() {
+        System.out.println("测试符号图");
+        String filename = routes;
+        String delimeter = " ";
+        SymbolGraph sg = new SymbolGraph(filename, delimeter);
+        String source = "JFK";
+        System.out.println("source " + source);
+        if (!sg.contains(source)) {
+            System.out.println(source + " not in database.");
+            return;
+        }
+        int s = sg.index(source);
+        Graph G = sg.G();
+        BreadthFirstPaths bfs = new BreadthFirstPaths(G, s);
+
+        String sink = "LAS";
+        System.out.println("sink " + sink);
+        if (sg.contains(sink)) {
+            int t = sg.index(sink);
+            if (bfs.hasPathTo(t)) {
+                for (int v : bfs.pathTo(t)) {
+                    System.out.println(" " + sg.name(v));
+                }
+            } else {
+                System.out.println("Not int database.");
+            }
+        }
     }
 }
